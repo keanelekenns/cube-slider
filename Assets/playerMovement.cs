@@ -9,18 +9,26 @@ public class playerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log("START");
     }
 
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("UPDATE");
     }
 
     // Called at consistent intervals (meant for physics)
     void FixedUpdate()
     {
-        playerRB.AddForce(0, -10, 50);
+        playerRB.AddForce(0, 0, 20);
+
+        if( Input.GetKey("d"))
+        {
+            playerRB.AddForce(5, 0, 0);
+        }
+        
+        if( Input.GetKey("a"))
+        {
+            playerRB.AddForce(-5, 0, 0);
+        } 
     }
 }
