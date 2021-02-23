@@ -29,6 +29,11 @@ public class playerMovement : MonoBehaviour
         if( Input.GetKey("a"))
         {
             playerRB.AddForce(-5, 0, 0);
+        }
+
+        if( Input.GetKey(KeyCode.Space))
+        {
+            playerRB.AddForce(0, 20, 0);
         } 
     }
 }
