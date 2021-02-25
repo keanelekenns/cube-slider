@@ -1,39 +1,42 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class playerMovement : MonoBehaviour
 {
     public Rigidbody playerRB;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-    }
+    public float forwardForce = 1000f;
+    public float sidewaysForce = 100f;
 
-    // Update is called once per frame
     void Update()
     {
+        
     }
-
     // Called at consistent intervals (meant for physics)
     void FixedUpdate()
     {
-        playerRB.AddForce(0, 0, 20);
+        playerRB.AddForce(0, 0, forwardForce*Time.deltaTime);
 
         if( Input.GetKey("d"))
         {
-            playerRB.AddForce(5, 0, 0);
+            playerRB.AddForce(sidewaysForce*Time.deltaTime, 0, 0, ForceMode.VelocityChange);
         }
         
         if( Input.GetKey("a"))
         {
-            playerRB.AddForce(-5, 0, 0);
+            playerRB.AddForce(-sidewaysForce*Time.deltaTime, 0, 0, ForceMode.VelocityChange);
         }
 
         if( Input.GetKey(KeyCode.Space))
         {
-            playerRB.AddForce(0, 20, 0);
-        } 
+            playerRB.AddForce(0, sidewaysForce*Time.deltaTime, 0, ForceMode.VelocityChange);
+        }
+    }
+
+    void OnCollisionEnter(Collision collisionInfo)
+    {
+        if(collisionInfo.collider.tag == "Obstacle")
+        {
+            this.enabled = false;
+        }
     }
 }
