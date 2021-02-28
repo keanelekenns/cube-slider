@@ -1,18 +1,24 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class score : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public Transform player;
+    public Text scoreText;
+    bool scoreSaved = false;
 
     // Update is called once per frame
     void Update()
     {
-        
+        if(!scoreSaved)
+        {
+            scoreText.text = player.position.z.ToString("0");
+        }
+    }
+
+    public void SaveScore()
+    {
+        //This doesn't do much right now
+        scoreSaved = true;
     }
 }

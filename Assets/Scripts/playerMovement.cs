@@ -7,6 +7,8 @@ public class playerMovement : MonoBehaviour
     public float forwardForce = 1000f;
     public float sidewaysForce = 100f;
 
+    public const int LOWER_BOUNDARY = -1;
+
     void Update()
     {
         
@@ -30,6 +32,11 @@ public class playerMovement : MonoBehaviour
         {
             playerRB.AddForce(0, sidewaysForce*Time.deltaTime, 0, ForceMode.VelocityChange);
         }
+
+        if(playerRB.position.y < LOWER_BOUNDARY)
+        {
+            FindObjectOfType<GameManager>().EndGame();
+        }
     }
 
     void OnCollisionEnter(Collision collisionInfo)
@@ -37,6 +44,8 @@ public class playerMovement : MonoBehaviour
         if(collisionInfo.collider.tag == "Obstacle")
         {
             this.enabled = false;
+
+            FindObjectOfType<GameManager>().EndGame();
         }
     }
 }
