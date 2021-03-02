@@ -4,8 +4,15 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public score score;
-    bool gameHasEnded = false;
     public float restartDelay = 1.5f;
+    public GameObject levelCompleteUI;
+    bool gameHasEnded = false;
+
+    void RestartGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
     public void EndGame()
     {
         if(!gameHasEnded)
@@ -16,9 +23,9 @@ public class GameManager : MonoBehaviour
             Invoke("RestartGame", restartDelay);
         }
     }
-
-    void RestartGame()
+    public void CompleteLevel()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        score.SaveScore();
+        levelCompleteUI.SetActive(true);
     }
 }
