@@ -619,7 +619,7 @@ GameObject:
   - component: {fileID: 291434304}
   m_Layer: 8
   m_Name: Ground
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3072,6 +3072,7 @@ MonoBehaviour:
   playerRB: {fileID: 2054173791}
   forwardForce: 2000
   sidewaysForce: 70
+  jumpingForce: 1000
 --- !u!1001 &2104355250
 PrefabInstance:
   m_ObjectHideFlags: 0
