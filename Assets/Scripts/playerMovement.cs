@@ -4,12 +4,18 @@ public class playerMovement : MonoBehaviour
 {
     public Rigidbody playerRB;
 
-    public float forwardForce = 1000f;
-    public float sidewaysForce = 100f;
-    public float jumpingForce = 300000f;
+    public float forwardForce;
+    public float sidewaysForce;
+    public float jumpingForce;
     public const int LOWER_BOUNDARY = -1;
 
-    bool inTheAir = false;
+    private bool inTheAir = false;
+     private bool isJumpPressed = false;
+
+    void Update()
+    {
+        isJumpPressed = Input.GetButtonDown("Jump") && !inTheAir;
+    }
 
     // Called at consistent intervals (meant for physics)
     void FixedUpdate()
@@ -26,10 +32,15 @@ public class playerMovement : MonoBehaviour
             playerRB.AddForce(-sidewaysForce*Time.deltaTime, 0, 0, ForceMode.VelocityChange);
         }
 
-        if(!inTheAir && Input.GetKey(KeyCode.Space))
+        if(isJumpPressed)
         {
+            playerRB.velocity += new Vector3(0, jumpingForce, 0);
             inTheAir = true;
-            playerRB.AddForce(0, jumpingForce, 0, ForceMode.Force);
+        }
+
+        if(playerRB.velocity.y < 0)
+        {
+            playerRB.velocity -= Physics.gravity*Time.deltaTime;
         }
 
         if(playerRB.position.y < LOWER_BOUNDARY)
