@@ -7,6 +7,7 @@ public class playerMovement : MonoBehaviour
     public float forwardForce;
     public float sidewaysForce;
     public float jumpingForce;
+    public float fallingForce;
     public const int LOWER_BOUNDARY = -1;
 
     private bool inTheAir = false;
@@ -20,6 +21,7 @@ public class playerMovement : MonoBehaviour
     // Called at consistent intervals (meant for physics)
     void FixedUpdate()
     {
+        playerRB.rotation = Quaternion.identity;
         playerRB.AddForce(0, 0, forwardForce*Time.deltaTime);
 
         if(!inTheAir && Input.GetKey("d"))
@@ -34,13 +36,16 @@ public class playerMovement : MonoBehaviour
 
         if(isJumpPressed)
         {
-            playerRB.velocity += new Vector3(0, jumpingForce, 0);
+            playerRB.AddForce(0, jumpingForce, 0, ForceMode.Impulse);
             inTheAir = true;
+            isJumpPressed = false;
         }
 
         if(playerRB.velocity.y < 0)
         {
-            playerRB.velocity -= Physics.gravity*Time.deltaTime;
+            // Increase gravity when we start falling,
+            // This makes our player fall faster
+            playerRB.velocity += fallingForce*Physics.gravity*Time.deltaTime;
         }
 
         if(playerRB.position.y < LOWER_BOUNDARY)
